@@ -3,46 +3,46 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>UPselling Data Generator</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <title>Upselling Tool Insertion</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-color: #e6f0fa;
-            --bg-gradient: linear-gradient(135deg, #e6f0fa 0%, #d6e4ff 100%);
+            --bg-color: #f0f4ff;
+            --bg-gradient: linear-gradient(135deg, #f0f4ff 0%, #dbeafe 100%);
             --container-bg: #ffffff;
-            --container-border: #e0e7ff;
-            --text-color: #1e2a44;
-            --label-color: #1e2a44;
-            --input-bg: #f7fbff;
-            --input-border: #c3dafe;
-            --input-focus: #2563eb;
-            --input-shadow: rgba(37, 99, 235, 0.3);
-            --button-bg: #2563eb;
+            --container-border: #d1e0ff;
+            --text-color: #0f172a;
+            --label-color: #1e293b;
+            --input-bg: #f8fafc;
+            --input-border: #bfdbfe;
+            --input-focus: #1d4ed8;
+            --input-shadow: rgba(29, 78, 216, 0.3);
+            --button-bg: #1d4ed8;
             --button-hover: #1e40af;
-            --button-shadow: rgba(37, 99, 235, 0.5);
+            --button-shadow: rgba(29, 78, 216, 0.5);
             --reset-bg: #dc2626;
             --reset-hover: #b91c1c;
             --reset-shadow: rgba(220, 38, 38, 0.5);
-            --sample-bg: #f59e0b;
-            --sample-hover: #d97706;
-            --sample-shadow: rgba(245, 158, 11, 0.5);
-            --copy-bg: #10b981;
-            --copy-hover: #059669;
-            --copy-shadow: rgba(16, 185, 129, 0.5);
-            --output-bg: #f7fbff;
+            --sample-bg: #ea580c;
+            --sample-hover: #c2410c;
+            --sample-shadow: rgba(234, 88, 12, 0.5);
+            --copy-bg: #16a34a;
+            --copy-hover: #15803d;
+            --copy-shadow: rgba(22, 163, 74, 0.5);
+            --output-bg: #f8fafc;
             --output-shadow: rgba(0, 0, 0, 0.05);
-            --tooltip-bg: #1e2a44;
-            --tooltip-text: #e2e8f0;
+            --tooltip-bg: #1e293b;
+            --tooltip-text: #f1f5f9;
             --heading-color: #1e40af;
         }
 
         [data-theme="dark"] {
             --bg-color: #0f172a;
             --bg-gradient: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%);
-            --container-bg: rgba(30, 41, 59, 0.9);
+            --container-bg: rgba(17, 24, 39, 0.95);
             --container-border: #334155;
-            --text-color: #e2e8f0;
-            --label-color: #bfdbfe;
+            --text-color: #f1f5f9;
+            --label-color: #cbd5e1;
             --input-bg: #1f2937;
             --input-border: #475569;
             --input-focus: #3b82f6;
@@ -53,16 +53,16 @@
             --reset-bg: #ef4444;
             --reset-hover: #dc2626;
             --reset-shadow: rgba(239, 68, 68, 0.5);
-            --sample-bg: #f59e0b;
-            --sample-hover: #d97706;
-            --sample-shadow: rgba(245, 158, 11, 0.5);
-            --copy-bg: #10b981;
-            --copy-hover: #059669;
-            --copy-shadow: rgba(16, 185, 129, 0.5);
+            --sample-bg: #ea580c;
+            --sample-hover: #c2410c;
+            --sample-shadow: rgba(234, 88, 12, 0.5);
+            --copy-bg: #16a34a;
+            --copy-hover: #15803d;
+            --copy-shadow: rgba(22, 163, 74, 0.5);
             --output-bg: #1f2937;
             --output-shadow: rgba(0, 0, 0, 0.2);
-            --tooltip-bg: #1e293b;
-            --tooltip-text: #e2e8f0;
+            --tooltip-bg: #111827;
+            --tooltip-text: #f1f5f9;
             --heading-color: #60a5fa;
         }
 
@@ -71,7 +71,7 @@
             background: var(--bg-gradient);
             color: var(--text-color);
             margin: 0;
-            padding: 50px;
+            padding: 60px;
             display: flex;
             justify-content: center;
             align-items: flex-start;
@@ -80,32 +80,32 @@
         }
         .container {
             background-color: var(--container-bg);
-            padding: 50px;
-            border-radius: 16px;
-            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.4);
-            max-width: 850px;
+            padding: 60px;
+            border-radius: 20px;
+            box-shadow: 0 14px 28px rgba(0, 0, 0, 0.3);
+            max-width: 900px;
             width: 100%;
             border: 1px solid var(--container-border);
         }
         h1 {
             text-align: center;
             color: var(--heading-color);
-            margin-bottom: 40px;
-            font-size: 34px;
-            font-weight: 700;
+            margin-bottom: 50px;
+            font-size: 36px;
+            font-weight: 800;
             text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
         }
         form {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 30px;
+            gap: 35px;
         }
         .full-width {
             grid-column: span 2;
         }
         label {
             font-weight: 600;
-            margin-bottom: 8px;
+            margin-bottom: 10px;
             display: block;
             color: var(--label-color);
         }
@@ -114,9 +114,9 @@
         input[type="date"],
         select {
             width: 100%;
-            padding: 14px;
+            padding: 16px;
             border: 1px solid var(--input-border);
-            border-radius: 8px;
+            border-radius: 10px;
             box-sizing: border-box;
             font-size: 16px;
             background-color: var(--input-bg);
@@ -126,30 +126,37 @@
         input:focus,
         select:focus {
             border-color: var(--input-focus);
-            box-shadow: 0 0 8px var(--input-shadow);
+            box-shadow: 0 0 10px var(--input-shadow);
             outline: none;
         }
         button {
             grid-column: span 2;
             background-color: var(--button-bg);
             color: #ffffff;
-            padding: 16px;
+            padding: 18px;
             border: none;
-            border-radius: 8px;
+            border-radius: 10px;
             cursor: pointer;
             font-size: 16px;
             font-weight: 600;
             transition: background-color 0.3s, transform 0.2s, box-shadow 0.3s;
+            position: relative;
         }
         button:hover {
             background-color: var(--button-hover);
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px var(--button-shadow);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 16px var(--button-shadow);
+        }
+        button:disabled {
+            background-color: #6b7280;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
         }
         .action-buttons {
             grid-column: span 2;
             display: flex;
-            gap: 20px;
+            gap: 25px;
         }
         .action-buttons button {
             flex: 1;
@@ -160,46 +167,46 @@
         }
         .reset-btn:hover {
             background-color: var(--reset-hover);
-            box-shadow: 0 4px 12px var(--reset-shadow);
+            box-shadow: 0 6px 16px var(--reset-shadow);
         }
         .sample-btn {
             background-color: var(--sample-bg);
         }
         .sample-btn:hover {
             background-color: var(--sample-hover);
-            box-shadow: 0 4px 12px var(--sample-shadow);
+            box-shadow: 0 6px 16px var(--sample-shadow);
         }
         .theme-toggle {
             background-color: #6b7280;
         }
         .theme-toggle:hover {
             background-color: #4b5563;
-            box-shadow: 0 4px 12px rgba(107, 114, 128, 0.5);
+            box-shadow: 0 6px 16px rgba(107, 114, 128, 0.5);
         }
         .output-section {
-            margin-top: 50px;
+            margin-top: 60px;
         }
         .output {
-            margin-bottom: 40px;
-            padding: 25px;
+            margin-bottom: 50px;
+            padding: 30px;
             background-color: var(--output-bg);
-            border-radius: 10px;
-            box-shadow: 0 6px 12px var(--output-shadow);
+            border-radius: 12px;
+            box-shadow: 0 8px 16px var(--output-shadow);
         }
         h2 {
             color: var(--heading-color);
-            font-size: 24px;
-            margin-bottom: 15px;
+            font-size: 26px;
+            margin-bottom: 20px;
             display: flex;
             align-items: center;
             text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
         }
         textarea {
             width: 100%;
-            height: 220px;
-            padding: 15px;
+            height: 240px;
+            padding: 16px;
             border: 1px solid var(--input-border);
-            border-radius: 8px;
+            border-radius: 10px;
             background-color: var(--input-bg);
             color: var(--text-color);
             font-family: 'Courier New', Courier, monospace;
@@ -211,34 +218,34 @@
             border-color: var(--input-focus);
         }
         .copy-btn {
-            margin-top: 15px;
+            margin-top: 20px;
             background-color: var(--copy-bg);
             width: 100%;
         }
         .copy-btn:hover {
             background-color: var(--copy-hover);
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px var(--copy-shadow);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 16px var(--copy-shadow);
         }
         .tooltip {
             position: relative;
             display: inline-block;
             cursor: help;
-            margin-left: 10px;
+            margin-left: 12px;
         }
         .tooltip .tooltiptext {
             visibility: hidden;
-            width: 240px;
+            width: 260px;
             background-color: var(--tooltip-bg);
             color: var(--tooltip-text);
             text-align: center;
-            border-radius: 8px;
-            padding: 12px;
+            border-radius: 10px;
+            padding: 14px;
             position: absolute;
             z-index: 1;
             bottom: 125%;
             left: 50%;
-            margin-left: -120px;
+            margin-left: -130px;
             opacity: 0;
             transition: opacity 0.3s;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
@@ -252,6 +259,37 @@
             top: 20px;
             right: 20px;
         }
+        .error-message {
+            grid-column: span 2;
+            color: #dc2626;
+            font-size: 14px;
+            text-align: center;
+            margin-top: 10px;
+            display: none;
+        }
+        .success-message {
+            grid-column: span 2;
+            color: #16a34a;
+            font-size: 14px;
+            text-align: center;
+            margin-top: 10px;
+            display: none;
+        }
+        .loading::after {
+            content: '';
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            margin-left: 10px;
+            border: 2px solid #ffffff;
+            border-top: 2px solid transparent;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
     </style>
 </head>
 <body data-theme="light">
@@ -259,17 +297,17 @@
         <button class="theme-toggle" id="themeToggle">Switch to Dark Mode</button>
     </div>
     <div class="container">
-        <h1>UpSelling Data Generator</h1>
+        <h1>Upselling Tool Insertion</h1>
         <form id="dataForm">
             <div class="full-width">
-                <label for="name">Guest Name (e.g., Mr. Musa Ahmed):</label>
+                <label for="name">Guest Name (e.g., John Doe):</label>
                 <input type="text" id="name" required>
             </div>
 
-            <label for="hcn">HCN (e.g., 577327578):</label>
+            <label for="hcn">HCN (e.g., 123456789):</label>
             <input type="text" id="hcn" required>
 
-            <label for="room">Room Number (e.g., 201):</label>
+            <label for="room">Room Number (e.g., 101):</label>
             <input type="text" id="room" required>
 
             <label for="checkin">Check-in Date:</label>
@@ -316,14 +354,17 @@
             </select>
 
             <div class="full-width">
-                <label for="voucherRanges">Voucher Ranges (e.g., 25653>25658, 26555>26559):</label>
+                <label for="voucherRanges">Voucher Ranges (e.g., 10001>10005, 20001>20003):</label>
                 <input type="text" id="voucherRanges" required>
             </div>
+
+            <div class="error-message" id="errorMessage"></div>
+            <div class="success-message" id="successMessage"></div>
 
             <div class="action-buttons">
                 <button type="button" class="sample-btn" id="loadSample">Load Sample Data</button>
                 <button type="reset" class="reset-btn" id="resetForm">Clear All</button>
-                <button type="submit">Generate Data</button>
+                <button type="submit" id="generateBtn">Generate Data</button>
             </div>
         </form>
 
@@ -331,7 +372,7 @@
             <div class="output">
                 <h2>Voucher Finance Numbers 
                     <span class="tooltip">(Repeated for nights × guests)
-                        <span class="tooltiptext">Tab-separated output for Excel. Repeats based on nights and guests.</span>
+                        <span class="tooltiptext">Tab-separated output for Excel. Repeats based on nights and guests. Amount is automatically handled by Excel.</span>
                     </span>
                 </h2>
                 <textarea id="sheet1" readonly></textarea>
@@ -358,12 +399,15 @@
         const loadSampleBtn = document.getElementById('loadSample');
         const resetBtn = document.getElementById('resetForm');
         const themeToggle = document.getElementById('themeToggle');
+        const errorMessage = document.getElementById('errorMessage');
+        const successMessage = document.getElementById('successMessage');
+        const generateBtn = document.getElementById('generateBtn');
 
         // Set default dates (September 07, 2025, and +3 days)
         const today = new Date('2025-09-07');
         const checkoutDefault = new Date(today);
         checkoutDefault.setDate(today.getDate() + 3);
-        
+
         document.getElementById('checkin').value = today.toISOString().split('T')[0];
         document.getElementById('checkout').value = checkoutDefault.toISOString().split('T')[0];
 
@@ -381,9 +425,9 @@
         });
 
         loadSampleBtn.addEventListener('click', function() {
-            document.getElementById('name').value = 'Mr. Musa Ahmed';
-            document.getElementById('hcn').value = '577327578';
-            document.getElementById('room').value = '201';
+            document.getElementById('name').value = 'John Doe';
+            document.getElementById('hcn').value = '123456789';
+            document.getElementById('room').value = '101';
             document.getElementById('checkin').value = '2025-09-06';
             document.getElementById('checkout').value = '2025-09-09';
             document.getElementById('guests').value = 2;
@@ -393,7 +437,9 @@
             document.getElementById('meal1').value = 'RO';
             document.getElementById('meal2').value = 'BB';
             document.getElementById('cashier').value = 'Ahmed';
-            document.getElementById('voucherRanges').value = '25653>25658,26555>26559';
+            document.getElementById('voucherRanges').value = '10001>10005,20001>20003';
+            errorMessage.style.display = 'none';
+            successMessage.style.display = 'none';
         });
 
         resetBtn.addEventListener('click', function() {
@@ -408,10 +454,15 @@
             document.getElementById('meal2').value = 'BB';
             document.getElementById('currency').value = 'AED';
             document.getElementById('cashier').value = 'Ahmed';
+            errorMessage.style.display = 'none';
+            successMessage.style.display = 'none';
         });
 
         form.addEventListener('submit', function(e) {
             e.preventDefault();
+            generateBtn.disabled = true;
+            generateBtn.textContent = 'Generating...';
+            generateBtn.classList.add('loading');
 
             // Get values
             const name = document.getElementById('name').value.trim();
@@ -422,7 +473,7 @@
             const guests = parseInt(document.getElementById('guests').value);
             const type = document.getElementById('type').value.trim();
             const typeUpper = type.toUpperCase();
-            const amount = parseFloat(document.getElementById('amount').value);
+            const amount = parseFloat(document.getElementById('amount').value || 0);
             const currency = document.getElementById('currency').value.trim();
             const meal1 = document.getElementById('meal1').value.trim();
             const meal2 = document.getElementById('meal2').value.trim();
@@ -432,9 +483,34 @@
             // Validate dates
             const timeDiff = checkoutDate - checkinDate;
             if (timeDiff <= 0) {
-                alert('Check-out date must be after check-in date.');
+                errorMessage.textContent = 'Check-out date must be after check-in date.';
+                errorMessage.style.display = 'block';
+                successMessage.style.display = 'none';
+                generateBtn.disabled = false;
+                generateBtn.textContent = 'Generate Data';
+                generateBtn.classList.remove('loading');
                 return;
             }
+
+            // Validate voucher ranges
+            const voucherRangesArray = voucherRanges.split(',').map(range => range.trim());
+            for (const range of voucherRangesArray) {
+                if (!/^\d+>\d+$/.test(range)) {
+                    errorMessage.textContent = 'Voucher ranges must be in the format "start>end" (e.g., 10001>10005).';
+                    errorMessage.style.display = 'block';
+                    successMessage.style.display = 'none';
+                    generateBtn.disabled = false;
+                    generateBtn.textContent = 'Generate Data';
+                    generateBtn.classList.remove('loading');
+                    return;
+                }
+            }
+
+            // Clear error message
+            errorMessage.style.display = 'none';
+            successMessage.style.display = 'none';
+
+            // Calculate nights
             const nights = Math.ceil(timeDiff / (1000 * 60 * 60 * 24));
 
             // Cashier upper
@@ -462,7 +538,6 @@
             const roomPadded = room.padStart(4, '0');
 
             // Parse voucher ranges
-            const voucherRangesArray = voucherRanges.split(',').map(range => range.trim());
             const voucherDetails = voucherRangesArray.join(',');
 
             // Details for Sheet 2 and System
@@ -471,9 +546,9 @@
             // System data
             const systemData = `${room}   | HCN : ${hcn}| ${name}  | V ${voucherDetails}  - ${type}`;
 
-            // Voucher Finance Numbers (Sheet 1)
+            // Voucher Finance Numbers (Sheet 1) - Amount removed
             let sheet1Data = '';
-            const line = `${checkinFull}\t${roomPadded}\t${hcn}\t${name}\t${cashierUpper}\t${typeUpper}\t${amount}`;
+            const line = `${checkinFull}\t${roomPadded}\t${hcn}\t${name}\t${cashierUpper}\t${typeUpper}`;
             for (let i = 0; i < nights * guests; i++) {
                 sheet1Data += line + '\n';
             }
@@ -482,17 +557,28 @@
             const sheet2Data = `${name}\t${meal1}\t${meal2}\t${amount.toFixed(2)}\t${details}\t${checkinShort}\t${checkoutShort}\t${nights}\t${guests}`;
 
             // Display
-            document.getElementById('sheet1').value = sheet1Data.trim();
-            document.getElementById('sheet2').value = sheet2Data;
-            document.getElementById('system').value = systemData;
-            outputs.style.display = 'block';
+            setTimeout(() => {
+                document.getElementById('sheet1').value = sheet1Data.trim();
+                document.getElementById('sheet2').value = sheet2Data;
+                document.getElementById('system').value = systemData;
+                outputs.style.display = 'block';
+                generateBtn.disabled = false;
+                generateBtn.textContent = 'Generate Data';
+                generateBtn.classList.remove('loading');
+                successMessage.textContent = 'Data generated successfully!';
+                successMessage.style.display = 'block';
+            }, 500); // Simulate processing delay
         });
 
         function copyToClipboard(id) {
             const textarea = document.getElementById(id);
             textarea.select();
             document.execCommand('copy');
-            alert('Copied to clipboard successfully!');
+            successMessage.textContent = 'Copied to clipboard successfully!';
+            successMessage.style.display = 'block';
+            setTimeout(() => {
+                successMessage.style.display = 'none';
+            }, 2000);
         }
     </script>
 </body>
