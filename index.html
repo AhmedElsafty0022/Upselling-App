@@ -183,6 +183,41 @@
             background-color: #4b5563;
             box-shadow: 0 6px 16px rgba(107, 114, 128, 0.5);
         }
+        .voucher-range-container {
+            grid-column: span 2;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        .voucher-range {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+        .voucher-range input {
+            flex: 1;
+        }
+        .remove-range-btn {
+            background-color: var(--reset-bg);
+            padding: 10px;
+            border-radius: 8px;
+            font-size: 14px;
+        }
+        .remove-range-btn:hover {
+            background-color: var(--reset-hover);
+            box-shadow: 0 4px 8px var(--reset-shadow);
+        }
+        .add-range-btn {
+            background-color: var(--button-bg);
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 14px;
+            margin-top: 10px;
+        }
+        .add-range-btn:hover {
+            background-color: var(--button-hover);
+            box-shadow: 0 4px 8px var(--button-shadow);
+        }
         .output-section {
             margin-top: 60px;
         }
@@ -353,9 +388,18 @@
                 <option value="Hassan">Hassan</option>
             </select>
 
-            <div class="full-width">
-                <label for="voucherRanges">Voucher Ranges (e.g., 10001>10005, 20001>20003):</label>
-                <input type="text" id="voucherRanges" required>
+            <div class="voucher-range-container full-width" id="voucherRangesContainer">
+                <label>Voucher Ranges 
+                    <span class="tooltip">(e.g., Start: 10001, End: 10005)
+                        <span class="tooltiptext">Add one or more voucher ranges. Start must be less than or equal to End.</span>
+                    </span>
+                </label>
+                <div class="voucher-range" id="voucherRange0">
+                    <input type="number" class="voucher-start" placeholder="Start (e.g., 10001)" min="1" required>
+                    <input type="number" class="voucher-end" placeholder="End (e.g., 10005)" min="1" required>
+                    <button type="button" class="remove-range-btn" onclick="removeVoucherRange(0)" style="display: none;">Remove</button>
+                </div>
+                <button type="button" class="add-range-btn" onclick="addVoucherRange()">Add Voucher Range</button>
             </div>
 
             <div class="error-message" id="errorMessage"></div>
@@ -402,6 +446,8 @@
         const errorMessage = document.getElementById('errorMessage');
         const successMessage = document.getElementById('successMessage');
         const generateBtn = document.getElementById('generateBtn');
+        const voucherRangesContainer = document.getElementById('voucherRangesContainer');
+        let rangeCount = 1;
 
         // Set default dates (September 07, 2025, and +3 days)
         const today = new Date('2025-09-07');
@@ -424,6 +470,31 @@
             }
         });
 
+        // Add voucher range
+        function addVoucherRange() {
+            const newRange = document.createElement('div');
+            newRange.className = 'voucher-range';
+            newRange.id = `voucherRange${rangeCount}`;
+            newRange.innerHTML = `
+                <input type="number" class="voucher-start" placeholder="Start (e.g., 10001)" min="1" required>
+                <input type="number" class="voucher-end" placeholder="End (e.g., 10005)" min="1" required>
+                <button type="button" class="remove-range-btn" onclick="removeVoucherRange(${rangeCount})">Remove</button>
+            `;
+            voucherRangesContainer.insertBefore(newRange, voucherRangesContainer.querySelector('.add-range-btn'));
+            rangeCount++;
+        }
+
+        // Remove voucher range
+        function removeVoucherRange(index) {
+            const rangeElement = document.getElementById(`voucherRange${index}`);
+            if (rangeElement) {
+                rangeElement.remove();
+            }
+            if (voucherRangesContainer.querySelectorAll('.voucher-range').length === 1) {
+                voucherRangesContainer.querySelector('.remove-range-btn').style.display = 'none';
+            }
+        }
+
         loadSampleBtn.addEventListener('click', function() {
             document.getElementById('name').value = 'John Doe';
             document.getElementById('hcn').value = '123456789';
@@ -437,7 +508,22 @@
             document.getElementById('meal1').value = 'RO';
             document.getElementById('meal2').value = 'BB';
             document.getElementById('cashier').value = 'Ahmed';
-            document.getElementById('voucherRanges').value = '10001>10005,20001>20003';
+            
+            // Reset voucher ranges
+            voucherRangesContainer.querySelectorAll('.voucher-range').forEach((range, index) => {
+                if (index > 0) range.remove();
+            });
+            const firstRange = voucherRangesContainer.querySelector('.voucher-range');
+            firstRange.querySelector('.voucher-start').value = '10001';
+            firstRange.querySelector('.voucher-end').value = '10005';
+            firstRange.querySelector('.remove-range-btn').style.display = 'none';
+            
+            // Add second sample range
+            addVoucherRange();
+            const secondRange = document.getElementById(`voucherRange${rangeCount - 1}`);
+            secondRange.querySelector('.voucher-start').value = '20001';
+            secondRange.querySelector('.voucher-end').value = '20003';
+            
             errorMessage.style.display = 'none';
             successMessage.style.display = 'none';
         });
@@ -454,8 +540,19 @@
             document.getElementById('meal2').value = 'BB';
             document.getElementById('currency').value = 'AED';
             document.getElementById('cashier').value = 'Ahmed';
+            
+            // Reset voucher ranges
+            voucherRangesContainer.querySelectorAll('.voucher-range').forEach((range, index) => {
+                if (index > 0) range.remove();
+            });
+            const firstRange = voucherRangesContainer.querySelector('.voucher-range');
+            firstRange.querySelector('.voucher-start').value = '';
+            firstRange.querySelector('.voucher-end').value = '';
+            firstRange.querySelector('.remove-range-btn').style.display = 'none';
+            
             errorMessage.style.display = 'none';
             successMessage.style.display = 'none';
+            rangeCount = 1;
         });
 
         form.addEventListener('submit', function(e) {
@@ -478,7 +575,33 @@
             const meal1 = document.getElementById('meal1').value.trim();
             const meal2 = document.getElementById('meal2').value.trim();
             const cashier = document.getElementById('cashier').value.trim();
-            const voucherRanges = document.getElementById('voucherRanges').value.trim();
+
+            // Get voucher ranges
+            const voucherRanges = [];
+            const rangeElements = voucherRangesContainer.querySelectorAll('.voucher-range');
+            for (const range of rangeElements) {
+                const start = parseInt(range.querySelector('.voucher-start').value);
+                const end = parseInt(range.querySelector('.voucher-end').value);
+                if (isNaN(start) || isNaN(end)) {
+                    errorMessage.textContent = 'Voucher ranges must contain valid numbers.';
+                    errorMessage.style.display = 'block';
+                    successMessage.style.display = 'none';
+                    generateBtn.disabled = false;
+                    generateBtn.textContent = 'Generate Data';
+                    generateBtn.classList.remove('loading');
+                    return;
+                }
+                if (start > end) {
+                    errorMessage.textContent = 'Voucher start must be less than or equal to end.';
+                    errorMessage.style.display = 'block';
+                    successMessage.style.display = 'none';
+                    generateBtn.disabled = false;
+                    generateBtn.textContent = 'Generate Data';
+                    generateBtn.classList.remove('loading');
+                    return;
+                }
+                voucherRanges.push(`${start}>${end}`);
+            }
 
             // Validate dates
             const timeDiff = checkoutDate - checkinDate;
@@ -490,20 +613,6 @@
                 generateBtn.textContent = 'Generate Data';
                 generateBtn.classList.remove('loading');
                 return;
-            }
-
-            // Validate voucher ranges
-            const voucherRangesArray = voucherRanges.split(',').map(range => range.trim());
-            for (const range of voucherRangesArray) {
-                if (!/^\d+>\d+$/.test(range)) {
-                    errorMessage.textContent = 'Voucher ranges must be in the format "start>end" (e.g., 10001>10005).';
-                    errorMessage.style.display = 'block';
-                    successMessage.style.display = 'none';
-                    generateBtn.disabled = false;
-                    generateBtn.textContent = 'Generate Data';
-                    generateBtn.classList.remove('loading');
-                    return;
-                }
             }
 
             // Clear error message
@@ -537,8 +646,8 @@
             // Pad room number
             const roomPadded = room.padStart(4, '0');
 
-            // Parse voucher ranges
-            const voucherDetails = voucherRangesArray.join(',');
+            // Combine voucher ranges
+            const voucherDetails = voucherRanges.join(',');
 
             // Details for Sheet 2 and System
             const details = `Room ${room}   | HCN : ${hcn}| ${name}  | V ${voucherDetails}  - ${type}`;
@@ -567,6 +676,9 @@
                 generateBtn.classList.remove('loading');
                 successMessage.textContent = 'Data generated successfully!';
                 successMessage.style.display = 'block';
+                setTimeout(() => {
+                    successMessage.style.display = 'none';
+                }, 2000);
             }, 500); // Simulate processing delay
         });
 
