@@ -3,695 +3,146 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Upselling Tool Insertion</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --bg-color: #f0f4ff;
-            --bg-gradient: linear-gradient(135deg, #f0f4ff 0%, #dbeafe 100%);
-            --container-bg: #ffffff;
-            --container-border: #d1e0ff;
-            --text-color: #0f172a;
-            --label-color: #1e293b;
-            --input-bg: #f8fafc;
-            --input-border: #bfdbfe;
-            --input-focus: #1d4ed8;
-            --input-shadow: rgba(29, 78, 216, 0.3);
-            --button-bg: #1d4ed8;
-            --button-hover: #1e40af;
-            --button-shadow: rgba(29, 78, 216, 0.5);
-            --reset-bg: #dc2626;
-            --reset-hover: #b91c1c;
-            --reset-shadow: rgba(220, 38, 38, 0.5);
-            --sample-bg: #ea580c;
-            --sample-hover: #c2410c;
-            --sample-shadow: rgba(234, 88, 12, 0.5);
-            --copy-bg: #16a34a;
-            --copy-hover: #15803d;
-            --copy-shadow: rgba(22, 163, 74, 0.5);
-            --output-bg: #f8fafc;
-            --output-shadow: rgba(0, 0, 0, 0.05);
-            --tooltip-bg: #1e293b;
-            --tooltip-text: #f1f5f9;
-            --heading-color: #1e40af;
-        }
-
-        [data-theme="dark"] {
-            --bg-color: #0f172a;
-            --bg-gradient: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%);
-            --container-bg: rgba(17, 24, 39, 0.95);
-            --container-border: #334155;
-            --text-color: #f1f5f9;
-            --label-color: #cbd5e1;
-            --input-bg: #1f2937;
-            --input-border: #475569;
-            --input-focus: #3b82f6;
-            --input-shadow: rgba(59, 130, 246, 0.5);
-            --button-bg: #3b82f6;
-            --button-hover: #2563eb;
-            --button-shadow: rgba(59, 130, 246, 0.5);
-            --reset-bg: #ef4444;
-            --reset-hover: #dc2626;
-            --reset-shadow: rgba(239, 68, 68, 0.5);
-            --sample-bg: #ea580c;
-            --sample-hover: #c2410c;
-            --sample-shadow: rgba(234, 88, 12, 0.5);
-            --copy-bg: #16a34a;
-            --copy-hover: #15803d;
-            --copy-shadow: rgba(22, 163, 74, 0.5);
-            --output-bg: #1f2937;
-            --output-shadow: rgba(0, 0, 0, 0.2);
-            --tooltip-bg: #111827;
-            --tooltip-text: #f1f5f9;
-            --heading-color: #60a5fa;
-        }
-
-        body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            background: var(--bg-gradient);
-            color: var(--text-color);
-            margin: 0;
-            padding: 60px;
-            display: flex;
-            justify-content: center;
-            align-items: flex-start;
-            min-height: 100vh;
-            transition: background 0.3s;
-        }
-        .container {
-            background-color: var(--container-bg);
-            padding: 60px;
-            border-radius: 20px;
-            box-shadow: 0 14px 28px rgba(0, 0, 0, 0.3);
-            max-width: 900px;
-            width: 100%;
-            border: 1px solid var(--container-border);
-        }
-        h1 {
-            text-align: center;
-            color: var(--heading-color);
-            margin-bottom: 50px;
-            font-size: 36px;
-            font-weight: 800;
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-        }
-        form {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 35px;
-        }
-        .full-width {
-            grid-column: span 2;
-        }
-        label {
-            font-weight: 600;
-            margin-bottom: 10px;
-            display: block;
-            color: var(--label-color);
-        }
-        input[type="text"],
-        input[type="number"],
-        input[type="date"],
-        select {
-            width: 100%;
-            padding: 16px;
-            border: 1px solid var(--input-border);
-            border-radius: 10px;
-            box-sizing: border-box;
-            font-size: 16px;
-            background-color: var(--input-bg);
-            color: var(--text-color);
-            transition: border-color 0.3s, box-shadow 0.3s;
-        }
-        input:focus,
-        select:focus {
-            border-color: var(--input-focus);
-            box-shadow: 0 0 10px var(--input-shadow);
-            outline: none;
-        }
-        button {
-            grid-column: span 2;
-            background-color: var(--button-bg);
-            color: #ffffff;
-            padding: 18px;
-            border: none;
-            border-radius: 10px;
-            cursor: pointer;
-            font-size: 16px;
-            font-weight: 600;
-            transition: background-color 0.3s, transform 0.2s, box-shadow 0.3s;
-            position: relative;
-        }
-        button:hover {
-            background-color: var(--button-hover);
-            transform: translateY(-3px);
-            box-shadow: 0 6px 16px var(--button-shadow);
-        }
-        button:disabled {
-            background-color: #6b7280;
-            cursor: not-allowed;
-            transform: none;
-            box-shadow: none;
-        }
-        .action-buttons {
-            grid-column: span 2;
-            display: flex;
-            gap: 25px;
-        }
-        .action-buttons button {
-            flex: 1;
-            grid-column: auto;
-        }
-        .reset-btn {
-            background-color: var(--reset-bg);
-        }
-        .reset-btn:hover {
-            background-color: var(--reset-hover);
-            box-shadow: 0 6px 16px var(--reset-shadow);
-        }
-        .sample-btn {
-            background-color: var(--sample-bg);
-        }
-        .sample-btn:hover {
-            background-color: var(--sample-hover);
-            box-shadow: 0 6px 16px var(--sample-shadow);
-        }
-        .theme-toggle {
-            background-color: #6b7280;
-        }
-        .theme-toggle:hover {
-            background-color: #4b5563;
-            box-shadow: 0 6px 16px rgba(107, 114, 128, 0.5);
-        }
-        .voucher-range-container {
-            grid-column: span 2;
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-        .voucher-range {
-            display: flex;
-            gap: 15px;
-            align-items: center;
-        }
-        .voucher-range input {
-            flex: 1;
-        }
-        .remove-range-btn {
-            background-color: var(--reset-bg);
-            padding: 10px;
-            border-radius: 8px;
-            font-size: 14px;
-        }
-        .remove-range-btn:hover {
-            background-color: var(--reset-hover);
-            box-shadow: 0 4px 8px var(--reset-shadow);
-        }
-        .add-range-btn {
-            background-color: var(--button-bg);
-            padding: 12px;
-            border-radius: 8px;
-            font-size: 14px;
-            margin-top: 10px;
-        }
-        .add-range-btn:hover {
-            background-color: var(--button-hover);
-            box-shadow: 0 4px 8px var(--button-shadow);
-        }
-        .output-section {
-            margin-top: 60px;
-        }
-        .output {
-            margin-bottom: 50px;
-            padding: 30px;
-            background-color: var(--output-bg);
-            border-radius: 12px;
-            box-shadow: 0 8px 16px var(--output-shadow);
-        }
-        h2 {
-            color: var(--heading-color);
-            font-size: 26px;
-            margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
-        }
-        textarea {
-            width: 100%;
-            height: 240px;
-            padding: 16px;
-            border: 1px solid var(--input-border);
-            border-radius: 10px;
-            background-color: var(--input-bg);
-            color: var(--text-color);
-            font-family: 'Courier New', Courier, monospace;
-            font-size: 14px;
-            resize: vertical;
-            transition: border-color 0.3s;
-        }
-        textarea:focus {
-            border-color: var(--input-focus);
-        }
-        .copy-btn {
-            margin-top: 20px;
-            background-color: var(--copy-bg);
-            width: 100%;
-        }
-        .copy-btn:hover {
-            background-color: var(--copy-hover);
-            transform: translateY(-3px);
-            box-shadow: 0 6px 16px var(--copy-shadow);
-        }
-        .tooltip {
-            position: relative;
-            display: inline-block;
-            cursor: help;
-            margin-left: 12px;
-        }
-        .tooltip .tooltiptext {
-            visibility: hidden;
-            width: 260px;
-            background-color: var(--tooltip-bg);
-            color: var(--tooltip-text);
-            text-align: center;
-            border-radius: 10px;
-            padding: 14px;
-            position: absolute;
-            z-index: 1;
-            bottom: 125%;
-            left: 50%;
-            margin-left: -130px;
-            opacity: 0;
-            transition: opacity 0.3s;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-        }
-        .tooltip:hover .tooltiptext {
-            visibility: visible;
-            opacity: 1;
-        }
-        .theme-switch {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-        }
-        .error-message {
-            grid-column: span 2;
-            color: #dc2626;
-            font-size: 14px;
-            text-align: center;
-            margin-top: 10px;
-            display: none;
-        }
-        .success-message {
-            grid-column: span 2;
-            color: #16a34a;
-            font-size: 14px;
-            text-align: center;
-            margin-top: 10px;
-            display: none;
-        }
-        .loading::after {
-            content: '';
-            display: inline-block;
-            width: 16px;
-            height: 16px;
-            margin-left: 10px;
-            border: 2px solid #ffffff;
-            border-top: 2px solid transparent;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-        }
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-    </style>
+    <title>Professional Upselling Tool</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body data-theme="light">
     <div class="theme-switch">
-        <button class="theme-toggle" id="themeToggle">Switch to Dark Mode</button>
+        <button class="btn btn-secondary" id="themeToggle"><i class="fas fa-moon"></i> Dark Mode</button>
     </div>
     <div class="container">
-        <h1>Upselling Tool Insertion</h1>
-        <form id="dataForm">
-            <div class="full-width">
-                <label for="name">Guest Name (e.g., John Doe):</label>
-                <input type="text" id="name" required>
+        <h1><i class="fas fa-chart-line me-2"></i>Professional Upselling Tool</h1>
+        <form id="dataForm" class="row g-3">
+            <div class="col-md-12">
+                <label for="name" class="form-label">Guest Name (e.g., John Doe)</label>
+                <input type="text" class="form-control" id="name" required>
             </div>
-
-            <label for="hcn">HCN (e.g., 123456789):</label>
-            <input type="text" id="hcn" required>
-
-            <label for="room">Room Number (e.g., 101):</label>
-            <input type="text" id="room" required>
-
-            <label for="checkin">Check-in Date:</label>
-            <input type="date" id="checkin" required>
-
-            <label for="checkout">Check-out Date:</label>
-            <input type="date" id="checkout" required>
-
-            <label for="guests">Number of Guests (e.g., 2):</label>
-            <input type="number" id="guests" min="1" value="1" required>
-
-            <label for="type">Payment Type:</label>
-            <select id="type" required>
-                <option value="Visa">Visa</option>
-                <option value="Mastercard">Mastercard</option>
-                <option value="Cash">Cash</option>
-                <option value="Other">Other</option>
-            </select>
-
-            <label for="amount">Amount (e.g., 40):</label>
-            <input type="number" id="amount" min="0" step="0.01" required>
-
-            <label for="currency">Currency:</label>
-            <select id="currency" required>
-                <option value="AED">AED</option>
-                <option value="USD">USD</option>
-                <option value="EUR">EUR</option>
-                <option value="Other">Other</option>
-            </select>
-
-            <label for="meal1">Meal Plan 1 (e.g., RO):</label>
-            <input type="text" id="meal1" value="RO" required>
-
-            <label for="meal2">Meal Plan 2 (e.g., BB):</label>
-            <input type="text" id="meal2" value="BB" required>
-
-            <label for="cashier">Cashier Name:</label>
-            <select id="cashier" required>
-                <option value="Ahmed">Ahmed</option>
-                <option value="Manisha">Manisha</option>
-                <option value="Hachem">Hachem</option>
-                <option value="Chetmi">Chetmi</option>
-                <option value="Hassan">Hassan</option>
-            </select>
-
-            <div class="voucher-range-container full-width" id="voucherRangesContainer">
-                <label>Voucher Ranges 
-                    <span class="tooltip">(e.g., Start: 10001, End: 10005)
-                        <span class="tooltiptext">Add one or more voucher ranges. Start must be less than or equal to End.</span>
+            <div class="col-md-6">
+                <label for="hcn" class="form-label">HCN (e.g., 123456789)</label>
+                <input type="text" class="form-control" id="hcn" required>
+            </div>
+            <div class="col-md-6">
+                <label for="room" class="form-label">Room Number (e.g., 101)</label>
+                <input type="text" class="form-control" id="room" required>
+            </div>
+            <div class="col-md-6">
+                <label for="checkin" class="form-label">Check-in Date</label>
+                <input type="date" class="form-control" id="checkin" required>
+            </div>
+            <div class="col-md-6">
+                <label for="checkout" class="form-label">Check-out Date</label>
+                <input type="date" class="form-control" id="checkout" required>
+            </div>
+            <div class="col-md-6">
+                <label for="guests" class="form-label">Number of Guests (min. 1)</label>
+                <input type="number" class="form-control" id="guests" min="1" value="1" required>
+            </div>
+            <div class="col-md-6">
+                <label for="type" class="form-label">Payment Type</label>
+                <select class="form-select" id="type" required>
+                    <option value="Visa">Visa</option>
+                    <option value="Mastercard">Mastercard</option>
+                    <option value="American Express">American Express</option>
+                    <option value="UnionPay">UnionPay</option>
+                    <option value="Discover">Discover</option>
+                    <option value="JCB">JCB</option>
+                    <option value="Diners Club">Diners Club</option>
+                    <option value="Cash">Cash</option>
+                    <option value="Bank Transfer">Bank Transfer</option>
+                    <option value="Other">Other</option>
+                </select>
+            </div>
+            <div class="col-md-6">
+                <label for="amount" class="form-label">Amount (e.g., 40.00)</label>
+                <input type="number" class="form-control" id="amount" min="0" step="0.01" required>
+            </div>
+            <div class="col-md-6">
+                <label for="currency" class="form-label">Currency</label>
+                <select class="form-select" id="currency" required>
+                    <option value="AED">AED</option>
+                    <option value="USD">USD</option>
+                    <option value="EUR">EUR</option>
+                    <option value="GBP">GBP</option>
+                    <option value="CAD">CAD</option>
+                    <option value="AUD">AUD</option>
+                    <option value="JPY">JPY</option>
+                    <option value="CNY">CNY</option>
+                    <option value="Other">Other</option>
+                </select>
+            </div>
+            <div class="col-md-6">
+                <label for="meal1" class="form-label">Meal Plan 1 (e.g., RO)</label>
+                <input type="text" class="form-control" id="meal1" value="RO" required>
+            </div>
+            <div class="col-md-6">
+                <label for="meal2" class="form-label">Meal Plan 2 (e.g., BB)</label>
+                <input type="text" class="form-control" id="meal2" value="BB" required>
+            </div>
+            <div class="col-md-6">
+                <label for="cashier" class="form-label">Cashier Name</label>
+                <select class="form-select" id="cashier" required>
+                    <option value="Ahmed">Ahmed</option>
+                    <option value="Manisha">Manisha</option>
+                    <option value="Hachem">Hachem</option>
+                    <option value="Chetmi">Chetmi</option>
+                    <option value="Hassan">Hassan</option>
+                </select>
+            </div>
+            <div class="col-md-6">
+                <label for="notes" class="form-label">Additional Notes (Optional)</label>
+                <input type="text" class="form-control" id="notes">
+            </div>
+            <div class="col-md-12">
+                <label class="form-label">Voucher Ranges 
+                    <span data-bs-toggle="tooltip" data-bs-placement="top" title="Add one or more voucher ranges. Start must be less than or equal to End. e.g., Start: 10001, End: 10005">
+                        <i class="fas fa-info-circle"></i>
                     </span>
                 </label>
-                <div class="voucher-range" id="voucherRange0">
-                    <input type="number" class="voucher-start" placeholder="Start (e.g., 10001)" min="1" required>
-                    <input type="number" class="voucher-end" placeholder="End (e.g., 10005)" min="1" required>
-                    <button type="button" class="remove-range-btn" onclick="removeVoucherRange(0)" style="display: none;">Remove</button>
+                <div id="voucherRangesContainer">
+                    <div class="input-group mb-2 voucher-range" id="voucherRange0">
+                        <input type="number" class="form-control voucher-start" placeholder="Start (e.g., 10001)" min="1" required>
+                        <input type="number" class="form-control voucher-end" placeholder="End (e.g., 10005)" min="1" required>
+                        <button type="button" class="btn btn-danger remove-range-btn" onclick="removeVoucherRange(0)" style="display: none;"><i class="fas fa-trash"></i></button>
+                    </div>
                 </div>
-                <button type="button" class="add-range-btn" onclick="addVoucherRange()">Add Voucher Range</button>
+                <button type="button" class="btn btn-primary add-range-btn" onclick="addVoucherRange()"><i class="fas fa-plus"></i> Add Voucher Range</button>
             </div>
-
-            <div class="error-message" id="errorMessage"></div>
-            <div class="success-message" id="successMessage"></div>
-
-            <div class="action-buttons">
-                <button type="button" class="sample-btn" id="loadSample">Load Sample Data</button>
-                <button type="reset" class="reset-btn" id="resetForm">Clear All</button>
-                <button type="submit" id="generateBtn">Generate Data</button>
+            <div class="col-md-12">
+                <div class="alert alert-danger d-none" id="errorMessage" role="alert"></div>
+                <div class="alert alert-success d-none" id="successMessage" role="alert"></div>
+            </div>
+            <div class="col-md-12 d-flex justify-content-between">
+                <button type="button" class="btn btn-warning" id="loadSample"><i class="fas fa-file-import"></i> Load Sample Data</button>
+                <button type="reset" class="btn btn-danger" id="resetForm"><i class="fas fa-undo"></i> Clear All</button>
+                <button type="submit" class="btn btn-primary" id="generateBtn"><i class="fas fa-cogs"></i> Generate Data</button>
             </div>
         </form>
-
-        <div class="output-section" id="outputs" style="display: none;">
-            <div class="output">
-                <h2>Voucher Finance Numbers 
-                    <span class="tooltip">(Repeated for nights × guests)
-                        <span class="tooltiptext">Tab-separated output for Excel. Repeats based on nights and guests. Amount is automatically handled by Excel.</span>
+        <div class="output-section d-none" id="outputs">
+            <div class="output-card">
+                <h5><i class="fas fa-file-invoice-dollar me-2"></i>Voucher Finance Numbers 
+                    <span data-bs-toggle="tooltip" data-bs-placement="top" title="Tab-separated output for Excel. Repeats based on nights and guests. Amount is automatically handled by Excel.">
+                        <i class="fas fa-info-circle"></i>
                     </span>
-                </h2>
-                <textarea id="sheet1" readonly></textarea>
-                <button class="copy-btn" onclick="copyToClipboard('sheet1')">Copy to Clipboard</button>
+                </h5>
+                <textarea class="form-control" id="sheet1" readonly></textarea>
+                <button class="btn btn-success mt-2 w-100" onclick="copyToClipboard('sheet1')"><i class="fas fa-copy"></i> Copy to Clipboard</button>
             </div>
-
-            <div class="output">
-                <h2>Upsell F&B Sheet</h2>
-                <textarea id="sheet2" readonly></textarea>
-                <button class="copy-btn" onclick="copyToClipboard('sheet2')">Copy to Clipboard</button>
+            <div class="output-card">
+                <h5><i class="fas fa-utensils me-2"></i>Upsell F&B Sheet</h5>
+                <textarea class="form-control" id="sheet2" readonly></textarea>
+                <button class="btn btn-success mt-2 w-100" onclick="copyToClipboard('sheet2')"><i class="fas fa-copy"></i> Copy to Clipboard</button>
             </div>
-
-            <div class="output">
-                <h2>Opera Cloud</h2>
-                <textarea id="system" readonly></textarea>
-                <button class="copy-btn" onclick="copyToClipboard('system')">Copy to Clipboard</button>
+            <div class="output-card">
+                <h5><i class="fas fa-cloud me-2"></i>Opera Cloud</h5>
+                <textarea class="form-control" id="system" readonly></textarea>
+                <button class="btn btn-success mt-2 w-100" onclick="copyToClipboard('system')"><i class="fas fa-copy"></i> Copy to Clipboard</button>
             </div>
         </div>
     </div>
-
-    <script>
-        const form = document.getElementById('dataForm');
-        const outputs = document.getElementById('outputs');
-        const loadSampleBtn = document.getElementById('loadSample');
-        const resetBtn = document.getElementById('resetForm');
-        const themeToggle = document.getElementById('themeToggle');
-        const errorMessage = document.getElementById('errorMessage');
-        const successMessage = document.getElementById('successMessage');
-        const generateBtn = document.getElementById('generateBtn');
-        const voucherRangesContainer = document.getElementById('voucherRangesContainer');
-        let rangeCount = 1;
-
-        // Set default dates (September 07, 2025, and +3 days)
-        const today = new Date('2025-09-07');
-        const checkoutDefault = new Date(today);
-        checkoutDefault.setDate(today.getDate() + 3);
-
-        document.getElementById('checkin').value = today.toISOString().split('T')[0];
-        document.getElementById('checkout').value = checkoutDefault.toISOString().split('T')[0];
-
-        // Theme toggle
-        themeToggle.addEventListener('click', () => {
-            const body = document.body;
-            const currentTheme = body.getAttribute('data-theme');
-            if (currentTheme === 'light') {
-                body.setAttribute('data-theme', 'dark');
-                themeToggle.textContent = 'Switch to Light Mode';
-            } else {
-                body.setAttribute('data-theme', 'light');
-                themeToggle.textContent = 'Switch to Dark Mode';
-            }
-        });
-
-        // Add voucher range
-        function addVoucherRange() {
-            const newRange = document.createElement('div');
-            newRange.className = 'voucher-range';
-            newRange.id = `voucherRange${rangeCount}`;
-            newRange.innerHTML = `
-                <input type="number" class="voucher-start" placeholder="Start (e.g., 10001)" min="1" required>
-                <input type="number" class="voucher-end" placeholder="End (e.g., 10005)" min="1" required>
-                <button type="button" class="remove-range-btn" onclick="removeVoucherRange(${rangeCount})">Remove</button>
-            `;
-            voucherRangesContainer.insertBefore(newRange, voucherRangesContainer.querySelector('.add-range-btn'));
-            rangeCount++;
-        }
-
-        // Remove voucher range
-        function removeVoucherRange(index) {
-            const rangeElement = document.getElementById(`voucherRange${index}`);
-            if (rangeElement) {
-                rangeElement.remove();
-            }
-            if (voucherRangesContainer.querySelectorAll('.voucher-range').length === 1) {
-                voucherRangesContainer.querySelector('.remove-range-btn').style.display = 'none';
-            }
-        }
-
-        loadSampleBtn.addEventListener('click', function() {
-            document.getElementById('name').value = 'John Doe';
-            document.getElementById('hcn').value = '123456789';
-            document.getElementById('room').value = '101';
-            document.getElementById('checkin').value = '2025-09-06';
-            document.getElementById('checkout').value = '2025-09-09';
-            document.getElementById('guests').value = 2;
-            document.getElementById('type').value = 'Visa';
-            document.getElementById('amount').value = 40;
-            document.getElementById('currency').value = 'AED';
-            document.getElementById('meal1').value = 'RO';
-            document.getElementById('meal2').value = 'BB';
-            document.getElementById('cashier').value = 'Ahmed';
-            
-            // Reset voucher ranges
-            voucherRangesContainer.querySelectorAll('.voucher-range').forEach((range, index) => {
-                if (index > 0) range.remove();
-            });
-            const firstRange = voucherRangesContainer.querySelector('.voucher-range');
-            firstRange.querySelector('.voucher-start').value = '10001';
-            firstRange.querySelector('.voucher-end').value = '10005';
-            firstRange.querySelector('.remove-range-btn').style.display = 'none';
-            
-            // Add second sample range
-            addVoucherRange();
-            const secondRange = document.getElementById(`voucherRange${rangeCount - 1}`);
-            secondRange.querySelector('.voucher-start').value = '20001';
-            secondRange.querySelector('.voucher-end').value = '20003';
-            
-            errorMessage.style.display = 'none';
-            successMessage.style.display = 'none';
-        });
-
-        resetBtn.addEventListener('click', function() {
-            form.reset();
-            document.getElementById('sheet1').value = '';
-            document.getElementById('sheet2').value = '';
-            document.getElementById('system').value = '';
-            outputs.style.display = 'none';
-            document.getElementById('checkin').value = today.toISOString().split('T')[0];
-            document.getElementById('checkout').value = checkoutDefault.toISOString().split('T')[0];
-            document.getElementById('meal1').value = 'RO';
-            document.getElementById('meal2').value = 'BB';
-            document.getElementById('currency').value = 'AED';
-            document.getElementById('cashier').value = 'Ahmed';
-            
-            // Reset voucher ranges
-            voucherRangesContainer.querySelectorAll('.voucher-range').forEach((range, index) => {
-                if (index > 0) range.remove();
-            });
-            const firstRange = voucherRangesContainer.querySelector('.voucher-range');
-            firstRange.querySelector('.voucher-start').value = '';
-            firstRange.querySelector('.voucher-end').value = '';
-            firstRange.querySelector('.remove-range-btn').style.display = 'none';
-            
-            errorMessage.style.display = 'none';
-            successMessage.style.display = 'none';
-            rangeCount = 1;
-        });
-
-        form.addEventListener('submit', function(e) {
-            e.preventDefault();
-            generateBtn.disabled = true;
-            generateBtn.textContent = 'Generating...';
-            generateBtn.classList.add('loading');
-
-            // Get values
-            const name = document.getElementById('name').value.trim();
-            const hcn = document.getElementById('hcn').value.trim();
-            const room = document.getElementById('room').value.trim();
-            const checkinDate = new Date(document.getElementById('checkin').value);
-            const checkoutDate = new Date(document.getElementById('checkout').value);
-            const guests = parseInt(document.getElementById('guests').value);
-            const type = document.getElementById('type').value.trim();
-            const typeUpper = type.toUpperCase();
-            const amount = parseFloat(document.getElementById('amount').value || 0);
-            const currency = document.getElementById('currency').value.trim();
-            const meal1 = document.getElementById('meal1').value.trim();
-            const meal2 = document.getElementById('meal2').value.trim();
-            const cashier = document.getElementById('cashier').value.trim();
-
-            // Get voucher ranges
-            const voucherRanges = [];
-            const rangeElements = voucherRangesContainer.querySelectorAll('.voucher-range');
-            for (const range of rangeElements) {
-                const start = parseInt(range.querySelector('.voucher-start').value);
-                const end = parseInt(range.querySelector('.voucher-end').value);
-                if (isNaN(start) || isNaN(end)) {
-                    errorMessage.textContent = 'Voucher ranges must contain valid numbers.';
-                    errorMessage.style.display = 'block';
-                    successMessage.style.display = 'none';
-                    generateBtn.disabled = false;
-                    generateBtn.textContent = 'Generate Data';
-                    generateBtn.classList.remove('loading');
-                    return;
-                }
-                if (start > end) {
-                    errorMessage.textContent = 'Voucher start must be less than or equal to end.';
-                    errorMessage.style.display = 'block';
-                    successMessage.style.display = 'none';
-                    generateBtn.disabled = false;
-                    generateBtn.textContent = 'Generate Data';
-                    generateBtn.classList.remove('loading');
-                    return;
-                }
-                voucherRanges.push(`${start}>${end}`);
-            }
-
-            // Validate dates
-            const timeDiff = checkoutDate - checkinDate;
-            if (timeDiff <= 0) {
-                errorMessage.textContent = 'Check-out date must be after check-in date.';
-                errorMessage.style.display = 'block';
-                successMessage.style.display = 'none';
-                generateBtn.disabled = false;
-                generateBtn.textContent = 'Generate Data';
-                generateBtn.classList.remove('loading');
-                return;
-            }
-
-            // Clear error message
-            errorMessage.style.display = 'none';
-            successMessage.style.display = 'none';
-
-            // Calculate nights
-            const nights = Math.ceil(timeDiff / (1000 * 60 * 60 * 24));
-
-            // Cashier upper
-            const cashierUpper = cashier.toUpperCase();
-
-            // Date formatting
-            const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-            const formatDateFull = (date) => {
-                const day = date.getDate();
-                const month = months[date.getMonth()];
-                const year = date.getFullYear().toString().slice(-2);
-                return `${day}-${month}-${year}`;
-            };
-            const formatDateShort = (date) => {
-                const day = date.getDate();
-                const month = months[date.getMonth()];
-                return `${day}-${month}`;
-            };
-
-            const checkinFull = formatDateFull(checkinDate);
-            const checkinShort = formatDateShort(checkinDate);
-            const checkoutShort = formatDateShort(checkoutDate);
-
-            // Pad room number
-            const roomPadded = room.padStart(4, '0');
-
-            // Combine voucher ranges
-            const voucherDetails = voucherRanges.join(',');
-
-            // Details for Sheet 2 and System
-            const details = `Room ${room}   | HCN : ${hcn}| ${name}  | V ${voucherDetails}  - ${type}`;
-
-            // System data
-            const systemData = `${room}   | HCN : ${hcn}| ${name}  | V ${voucherDetails}  - ${type}`;
-
-            // Voucher Finance Numbers (Sheet 1) - Amount removed
-            let sheet1Data = '';
-            const line = `${checkinFull}\t${roomPadded}\t${hcn}\t${name}\t${cashierUpper}\t${typeUpper}`;
-            for (let i = 0; i < nights * guests; i++) {
-                sheet1Data += line + '\n';
-            }
-
-            // Upsell F&B Sheet (Sheet 2) - Amount without currency
-            const sheet2Data = `${name}\t${meal1}\t${meal2}\t${amount.toFixed(2)}\t${details}\t${checkinShort}\t${checkoutShort}\t${nights}\t${guests}`;
-
-            // Display
-            setTimeout(() => {
-                document.getElementById('sheet1').value = sheet1Data.trim();
-                document.getElementById('sheet2').value = sheet2Data;
-                document.getElementById('system').value = systemData;
-                outputs.style.display = 'block';
-                generateBtn.disabled = false;
-                generateBtn.textContent = 'Generate Data';
-                generateBtn.classList.remove('loading');
-                successMessage.textContent = 'Data generated successfully!';
-                successMessage.style.display = 'block';
-                setTimeout(() => {
-                    successMessage.style.display = 'none';
-                }, 2000);
-            }, 500); // Simulate processing delay
-        });
-
-        function copyToClipboard(id) {
-            const textarea = document.getElementById(id);
-            textarea.select();
-            document.execCommand('copy');
-            successMessage.textContent = 'Copied to clipboard successfully!';
-            successMessage.style.display = 'block';
-            setTimeout(() => {
-                successMessage.style.display = 'none';
-            }, 2000);
-        }
-    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
