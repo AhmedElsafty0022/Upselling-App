@@ -9,6 +9,7 @@ const themeToggle = document.getElementById('themeToggle');
 const errorMessage = document.getElementById('errorMessage');
 const successMessage = document.getElementById('successMessage');
 const generateBtn = document.getElementById('generateBtn');
+const guestTypeSelect = document.getElementById('guestType');
 const voucherRangesContainer = document.getElementById('voucherRangesContainer');
 let rangeCount = 1;
 
@@ -32,6 +33,18 @@ themeToggle.addEventListener('click', () => {
         themeToggle.innerHTML = '<i class="fas fa-moon"></i> Dark Mode';
     }
 });
+
+// Toggle required fields based on guest type
+function toggleRequiredFields() {
+    const isInHouse = guestTypeSelect.value === 'In-House';
+    const fields = ['hcn', 'room', 'checkin', 'checkout', 'meal1', 'meal2', 'guests'];
+    fields.forEach(id => {
+        const field = document.getElementById(id);
+        field.required = isInHouse;
+    });
+}
+guestTypeSelect.addEventListener('change', toggleRequiredFields);
+toggleRequiredFields(); // Initialize on page load
 
 // Add voucher range
 function addVoucherRange() {
@@ -68,6 +81,8 @@ function updateRemoveButtons() {
 updateRemoveButtons();
 
 loadSampleBtn.addEventListener('click', function() {
+    document.getElementById('guestType').value = 'In-House';
+    toggleRequiredFields();
     document.getElementById('name').value = 'John Doe';
     document.getElementById('hcn').value = '123456789';
     document.getElementById('room').value = '101';
@@ -103,6 +118,8 @@ loadSampleBtn.addEventListener('click', function() {
 
 resetBtn.addEventListener('click', function() {
     form.reset();
+    document.getElementById('guestType').value = 'In-House';
+    toggleRequiredFields();
     document.getElementById('sheet1').value = '';
     document.getElementById('sheet2').value = '';
     document.getElementById('system').value = '';
@@ -129,6 +146,7 @@ resetBtn.addEventListener('click', function() {
 
 form.addEventListener('submit', function(e) {
     e.preventDefault();
+    const isInHouse = guestTypeSelect.value === 'In-House';
     if (!form.checkValidity()) {
         form.classList.add('was-validated');
         return;
@@ -141,9 +159,9 @@ form.addEventListener('submit', function(e) {
     const name = document.getElementById('name').value.trim();
     const hcn = document.getElementById('hcn').value.trim();
     const room = document.getElementById('room').value.trim();
-    const checkinDate = new Date(document.getElementById('checkin').value);
-    const checkoutDate = new Date(document.getElementById('checkout').value);
-    const guests = parseInt(document.getElementById('guests').value);
+    const checkinDate = document.getElementById('checkin').value ? new Date(document.getElementById('checkin').value) : null;
+    const checkoutDate = document.getElementById('checkout').value ? new Date(document.getElementById('checkout').value) : null;
+    const guests = parseInt(document.getElementById('guests').value) || 1;
     const type = document.getElementById('type').value.trim();
     const typeUpper = type.toUpperCase();
     const amount = parseFloat(document.getElementById('amount').value || 0);
@@ -177,24 +195,26 @@ form.addEventListener('submit', function(e) {
         return;
     }
 
-    // Validate dates
-    const timeDiff = checkoutDate - checkinDate;
-    if (timeDiff <= 0) {
-        errorMessage.textContent = 'Check-out date must be after check-in date.';
-        errorMessage.classList.remove('d-none');
-        successMessage.classList.add('d-none');
-        generateBtn.disabled = false;
-        generateBtn.innerHTML = '<i class="fas fa-cogs"></i> Generate Data';
-        generateBtn.classList.remove('loading');
-        return;
+    // Validate dates for in-house guests
+    if (isInHouse && checkinDate && checkoutDate) {
+        const timeDiff = checkoutDate - checkinDate;
+        if (timeDiff <= 0) {
+            errorMessage.textContent = 'Check-out date must be after check-in date.';
+            errorMessage.classList.remove('d-none');
+            successMessage.classList.add('d-none');
+            generateBtn.disabled = false;
+            generateBtn.innerHTML = '<i class="fas fa-cogs"></i> Generate Data';
+            generateBtn.classList.remove('loading');
+            return;
+        }
     }
 
     // Clear messages
     errorMessage.classList.add('d-none');
     successMessage.classList.add('d-none');
 
-    // Calculate nights
-    const nights = Math.ceil(timeDiff / (1000 * 60 * 60 * 24));
+    // Calculate nights for in-house guests
+    const nights = isInHouse && checkinDate && checkoutDate ? Math.ceil((checkoutDate - checkinDate) / (1000 * 60 * 60 * 24)) : 1;
 
     // Cashier upper
     const cashierUpper = cashier.toUpperCase();
@@ -202,12 +222,14 @@ form.addEventListener('submit', function(e) {
     // Date formatting
     const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
     const formatDateFull = (date) => {
+        if (!date) return 'N/A';
         const day = date.getDate();
         const month = months[date.getMonth()];
         const year = date.getFullYear().toString().slice(-2);
         return `${day}-${month}-${year}`;
     };
     const formatDateShort = (date) => {
+        if (!date) return 'N/A';
         const day = date.getDate();
         const month = months[date.getMonth()];
         return `${day}-${month}`;
@@ -217,28 +239,32 @@ form.addEventListener('submit', function(e) {
     const checkinShort = formatDateShort(checkinDate);
     const checkoutShort = formatDateShort(checkoutDate);
 
-    // Pad room number
-    const roomPadded = room.padStart(4, '0');
+    // Pad room number or use N/A
+    const roomPadded = room ? room.padStart(4, '0') : 'N/A';
 
     // Combine voucher ranges
     const voucherDetails = voucherRanges.join(',');
 
     // Details for Sheet 2 and System
-    let details = `Room ${room} | HCN: ${hcn} | ${name} | V ${voucherDetails} - ${type}`;
+    let details = isInHouse ? `Room ${room || 'N/A'} | HCN: ${hcn || 'N/A'} | ${name} | V ${voucherDetails} - ${type}` : `${name} | V ${voucherDetails} - ${type} | No Invoice`;
     if (notes) details += ` | Notes: ${notes}`;
 
-    // System data
+    // System data (Opera Cloud)
     const systemData = details;
 
     // Voucher Finance Numbers (Sheet 1)
     let sheet1Data = '';
-    const line = `${checkinFull}\t${roomPadded}\t${hcn}\t${name}\t${cashierUpper}\t${typeUpper}`;
-    for (let i = 0; i < nights * guests; i++) {
-        sheet1Data += line + '\n';
+    if (isInHouse) {
+        const line = `${checkinFull}\t${roomPadded}\t${hcn || 'N/A'}\t${name}\t${cashierUpper}\t${typeUpper}`;
+        for (let i = 0; i < nights * guests; i++) {
+            sheet1Data += line + '\n';
+        }
+    } else {
+        sheet1Data = `${formatDateFull(new Date())}\tN/A\tN/A\t${name}\t${cashierUpper}\t${typeUpper}`;
     }
 
-    // Upsell F&B Sheet (Sheet 2)
-    const sheet2Data = `${name}\t${meal1}\t${meal2}\t${amount.toFixed(2)}\t${details}\t${checkinShort}\t${checkoutShort}\t${nights}\t${guests}`;
+    // Upsell F&B Sheet (Sheet 2) - Only for in-house guests
+    const sheet2Data = isInHouse ? `${name}\t${meal1 || 'N/A'}\t${meal2 || 'N/A'}\t${amount.toFixed(2)}\t${details}\t${checkinShort}\t${checkoutShort}\t${nights}\t${guests}` : '';
 
     // Display
     setTimeout(() => {
@@ -266,5 +292,4 @@ function copyToClipboard(id) {
     setTimeout(() => {
         successMessage.classList.add('d-none');
     }, 2000);
-
 }

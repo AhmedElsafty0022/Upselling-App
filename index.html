@@ -17,6 +17,17 @@
         <h1><i class="fas fa-chart-line me-2"></i>Professional Upselling Tool</h1>
         <form id="dataForm" class="row g-3">
             <div class="col-md-12">
+                <label for="guestType" class="form-label">Guest Type 
+                    <span data-bs-toggle="tooltip" data-bs-placement="top" title="Select 'In-House' for guests with room bookings or 'Walk-In' for guests without bookings.">
+                        <i class="fas fa-info-circle"></i>
+                    </span>
+                </label>
+                <select class="form-select" id="guestType" required>
+                    <option value="In-House">In-House</option>
+                    <option value="Walk-In">Walk-In</option>
+                </select>
+            </div>
+            <div class="col-md-12">
                 <label for="name" class="form-label">Guest Name (e.g., John Doe)</label>
                 <input type="text" class="form-control" id="name" required>
             </div>
@@ -123,7 +134,7 @@
         <div class="output-section d-none" id="outputs">
             <div class="output-card">
                 <h5><i class="fas fa-file-invoice-dollar me-2"></i>Voucher Finance Numbers 
-                    <span data-bs-toggle="tooltip" data-bs-placement="top" title="Tab-separated output for Excel. Repeats based on nights and guests. Amount is automatically handled by Excel.">
+                    <span data-bs-toggle="tooltip" data-bs-placement="top" title="Tab-separated output for Excel. Repeats based on nights and guests for in-house guests.">
                         <i class="fas fa-info-circle"></i>
                     </span>
                 </h5>
