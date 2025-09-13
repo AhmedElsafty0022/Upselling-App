@@ -238,7 +238,7 @@ form.addEventListener('submit', function(e) {
     }
 
     // Upsell F&B Sheet (Sheet 2)
-    const sheet2Data = `${name}\t${meal1}\t${meal2}\t${amount.toFixed(2)} ${currency}\t${details}\t${checkinShort}\t${checkoutShort}\t${nights}\t${guests}`;
+    const sheet2Data = `${name}\t${meal1}\t${meal2}\t${amount.toFixed(2)}\t${details}\t${checkinShort}\t${checkoutShort}\t${nights}\t${guests}`;
 
     // Display
     setTimeout(() => {
@@ -266,4 +266,5 @@ function copyToClipboard(id) {
     setTimeout(() => {
         successMessage.classList.add('d-none');
     }, 2000);
+
 }
